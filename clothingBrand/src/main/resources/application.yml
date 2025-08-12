@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/authdb
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: your-smtp-user
+    password: your-smtp-password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+
+server:
+  port: 8080
+
+jwt:
+  secret: changeit_to_a_long_random_secret_in_prod
+  accessTokenExpirationMinutes: 15
+  refreshTokenExpirationDays: 14
+
+app:
+  email:
+    from: "no-reply@example.com"
+    logo-url: "https://example.com/assets/logo.png" # placeholder
