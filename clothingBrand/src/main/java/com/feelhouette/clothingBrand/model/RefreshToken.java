@@ -1,9 +1,12 @@
 package com.feelhouette.clothingBrand.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.Instant;
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "refresh_tokens")
 public class RefreshToken {
@@ -31,14 +34,14 @@ public class RefreshToken {
         this.expiresAt = expiresAt;
     }
 
-    // getters and setters
-    public UUID getId() { return id; }
-    public String getToken() { return token; }
-    public User getUser() { return user; }
-    public Instant getExpiresAt() { return expiresAt; }
-    public boolean isRevoked() { return revoked; }
-    public void setRevoked(boolean revoked) { this.revoked = revoked; }
-    public Instant getLastUsedAt() { return lastUsedAt; }
-    public void setLastUsedAt(Instant lastUsedAt) { this.lastUsedAt = lastUsedAt; }
+//    // getters and setters
+//    public UUID getId() { return id; }
+//    public String getToken() { return token; }
+//    public User getUser() { return user; }
+//    public Instant getExpiresAt() { return expiresAt; }
+//    public boolean isRevoked() { return revoked; }
+//    public void setRevoked(boolean revoked) { this.revoked = revoked; }
+//    public Instant getLastUsedAt() { return lastUsedAt; }
+//    public void setLastUsedAt(Instant lastUsedAt) { this.lastUsedAt = lastUsedAt; }
 }
 

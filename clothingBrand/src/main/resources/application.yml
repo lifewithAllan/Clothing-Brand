@@ -1,8 +1,10 @@
 spring:
+  application:
+      name:clothingBrand
   datasource:
-    url: jdbc:postgresql://localhost:5432/authdb
+    url: jdbc:postgresql://localhost:5432/clothingBrand
     username: postgres
-    password: postgres
+    password: password
   jpa:
     hibernate:
       ddl-auto: update

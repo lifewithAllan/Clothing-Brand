@@ -1,4 +1,5 @@
 package com.feelhouette.clothingBrand.dto;
 
-public record ValidateConfirmationResponse(String email, long expiresAtEpochMillis) {}
+public record ValidateConfirmationResponse(String email,
+                                           long expiresAtEpochMillis) {}
 
