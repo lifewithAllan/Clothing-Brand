@@ -1,0 +1,39 @@
+.wrap {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: #f9fafb;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.logout {
+  border: none;
+  background: #ef4444;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.content {
+  padding: 16px;
+}
+
+/* Larger screens: increase spacing */
+@media (min-width: 768px) {
+  .header { padding: 16px 24px; }
+  .content { padding: 24px; }
+}
