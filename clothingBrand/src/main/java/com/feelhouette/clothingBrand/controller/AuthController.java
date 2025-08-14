@@ -20,7 +20,7 @@ public class AuthController {
     @PostMapping("/request-signup")
     public ResponseEntity<Void> requestSignup(@RequestBody @Valid SignupEmailRequest req,
                                               @RequestHeader(value = "X-FRONTEND-BASE-URL", required = false) String frontendBase) {
-        var base = frontendBase == null ? "http://localhost:3000" : frontendBase;
+        var base = frontendBase == null ? "http://localhost:5173" : frontendBase;
         auth.requestSignup(req, base);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
