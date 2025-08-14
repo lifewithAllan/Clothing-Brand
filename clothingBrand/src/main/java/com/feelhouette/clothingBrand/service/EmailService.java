@@ -46,7 +46,7 @@ public class EmailService {
         return """
             <html>
               <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0;">
-                <table width="100%" cellpadding="0" cellspacing="0">
+                <table width="100%%" cellpadding="0" cellspacing="0">
                   <tr>
                     <td align="center" style="padding: 30px 0; background-color: #f7f7f7;">
                       <img src="%s" alt="Logo" width="160" style="display:block; margin-bottom: 20px;" />
