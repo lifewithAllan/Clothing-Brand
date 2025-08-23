@@ -1,0 +1,36 @@
+.wrap { display: grid; gap: 12px; }
+
+.head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+
+.title { margin: 0; }
+.tag {
+  font-size: 12px;
+  background: #f1f5f9;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: #334155;
+}
+
+.panel {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px;
+}
+
+.h3 { margin: 0 0 8px; }
+
+.row { display: flex; gap: 8px; }
+.input { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; flex: 1; }
+
+.list { margin: 10px 0 0; padding-left: 18px; }
+.item { display: flex; align-items: center; gap: 8px; }
+
+.linkBtn { background: transparent; border: none; color: #2563eb; cursor: pointer; padding: 0; }
+
+.actions { display: flex; gap: 10px; margin-top: 10px; }
+
+.primary { border: none; background: #2563eb; color: #fff; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+.danger { border: 1px solid #ef4444; background: #ef4444; color: #fff; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+
+.empty { padding: 12px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; }

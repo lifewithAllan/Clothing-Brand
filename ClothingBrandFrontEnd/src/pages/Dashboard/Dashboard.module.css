@@ -1,0 +1,20 @@
+/* Layout below a fixed navbar */
+
+.wrap {
+  min-height: 100dvh;
+  background: #f8fafc;
+}
+
+.main {
+  padding: 12px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+  .main { padding: 18px; }
+}

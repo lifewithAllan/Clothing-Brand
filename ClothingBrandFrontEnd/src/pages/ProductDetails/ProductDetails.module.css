@@ -1,0 +1,42 @@
+.grid {
+  display: grid; gap: 16px;
+}
+@media (min-width: 900px) {
+  .grid { grid-template-columns: 1.1fr 1fr; }
+}
+
+.left { }
+.right { }
+
+.title { margin: 0; }
+
+.meta { color: #6b7280; margin: 4px 0 8px; }
+
+.desc { margin: 10px 0; padding-left: 18px; color: #334155; }
+
+.panel {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px;
+}
+
+.h3 { margin: 0 0 8px; }
+
+.row { display: grid; gap: 10px; }
+@media (min-width: 600px) { .row { grid-template-columns: 1fr 1fr; } }
+
+.label { display: grid; gap: 6px; }
+.input { border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; }
+
+.sizes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.sizeChip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 8px; border-radius: 999px; border: 1px solid #e5e7eb; background: #f8fafc;
+}
+
+.actions { display: flex; gap: 10px; margin-top: 10px; }
+
+.primary { border: none; background: #2563eb; color: #fff; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+.danger { border: 1px solid #ef4444; background: #ef4444; color: #fff; padding: 10px 14px; border-radius: 8px; cursor: pointer; }
+
+.empty {
+  padding: 12px; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+}

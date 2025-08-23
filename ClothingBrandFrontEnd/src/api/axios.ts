@@ -1,7 +1,10 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+//import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
 import { storage } from '../utils/storage';
 import type { AuthResponse } from '../types';
-import { auth } from '../auth/AuthContext';
+//import { auth } from '../auth/AuthContext';
+import { auth } from '../auth/authBridge';
 
 // Create a singleton axios instance for API calls
 export const api: AxiosInstance = axios.create({

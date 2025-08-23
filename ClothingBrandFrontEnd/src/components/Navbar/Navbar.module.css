@@ -1,0 +1,126 @@
+/* Fixed, responsive navbar using CSS Modules (mobile-first) */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #111827;
+  color: #fff;
+  border-bottom: 1px solid #0b1220;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.logo {
+  width: 28px;
+  height: 28px;
+}
+
+.brandText {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.burger {
+  background: transparent;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.nav {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.nav.open {
+  display: flex;
+}
+
+.link {
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link:hover {
+  background: #1f2937;
+}
+
+.active {
+  background: #374151;
+  color: #fff;
+}
+
+.search {
+  display: flex;
+  gap: 6px;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 140px;
+  border: 1px solid #4b5563;
+  background: #0b1220;
+  color: #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.searchInput::placeholder {
+  color: #94a3b8;
+}
+
+.searchBtn {
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logout {
+  border: 1px solid #ef4444;
+  background: #ef4444;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Larger screens */
+@media (min-width: 900px) {
+  .burger { display: none; }
+  .nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+    margin-top: 0;
+  }
+}
