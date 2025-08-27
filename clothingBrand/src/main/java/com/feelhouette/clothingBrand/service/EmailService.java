@@ -84,5 +84,71 @@ public class EmailService {
             </html>
             """.formatted(logoUrl, confirmationLink, confirmationLink, java.time.Year.now().getValue());
     }
+
+    // add imports if needed
+    public void sendPasswordResetEmail(String to, String resetLink) {
+        String subject = "Reset your password";
+        String html = buildPasswordResetHtml(resetLink);
+        sendHtmlEmail(to, subject, html);
+    }
+
+    public void sendDeleteAccountEmail(String to, String deleteLink) {
+        String subject = "Confirm account deletion";
+        String html = buildDeleteAccountHtml(deleteLink);
+        sendHtmlEmail(to, subject, html);
+    }
+
+    private String buildPasswordResetHtml(String resetLink) {
+        return """
+        <html>
+          <body style="font-family: Arial, sans-serif; color: #333;">
+            <table width="100%%" cellpadding="0" cellspacing="0">
+              <tr><td align="center" style="padding:30px 0;">
+                <img src="%s" alt="Logo" width="160" style="display:block;margin-bottom:20px;"/>
+              </td></tr>
+              <tr><td align="center" style="padding:20px;">
+                <table width="600" style="background:#fff;border-radius:8px;padding:24px;">
+                  <tr><td>
+                    <h2>Reset your password</h2>
+                    <p>Click the button below to reset your password. This link will expire in 2 hours.</p>
+                    <p style="text-align:center;margin:20px 0;">
+                      <a href="%s" style="background:#007bff;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;">Reset password</a>
+                    </p>
+                    <p style="color:#999;font-size:13px;">If you didn't request this, ignore this email.</p>
+                  </td></tr>
+                </table>
+              </td></tr>
+            </table>
+          </body>
+        </html>
+        """.formatted(logoUrl, resetLink);
+    }
+
+    private String buildDeleteAccountHtml(String deleteLink) {
+        return """
+        <html>
+          <body style="font-family: Arial, sans-serif; color: #333;">
+            <table width="100%%" cellpadding="0" cellspacing="0">
+              <tr><td align="center" style="padding:30px 0;">
+                <img src="%s" alt="Logo" width="160" style="display:block;margin-bottom:20px;"/>
+              </td></tr>
+              <tr><td align="center" style="padding:20px;">
+                <table width="600" style="background:#fff;border-radius:8px;padding:24px;">
+                  <tr><td>
+                    <h2>Confirm account deletion</h2>
+                    <p>You're about to delete your account. This action is irreversible. Click the button below to confirm deletion. The link expires in 24 hours.</p>
+                    <p style="text-align:center;margin:20px 0;">
+                      <a href="%s" style="background:#ef4444;color:#fff;padding:12px 20px;border-radius:6px;text-decoration:none;">Delete my account</a>
+                    </p>
+                    <p style="color:#999;font-size:13px;">If you didn't request this, ignore this email.</p>
+                  </td></tr>
+                </table>
+              </td></tr>
+            </table>
+          </body>
+        </html>
+        """.formatted(logoUrl, deleteLink);
+    }
+
 }
 
