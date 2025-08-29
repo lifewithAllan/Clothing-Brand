@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/buyer/auth")
+@RequestMapping("/api/auth/buyer")
 public class BuyerAuthController {
 
     private final BuyerAuthService auth;

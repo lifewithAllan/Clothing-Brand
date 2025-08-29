@@ -3,6 +3,7 @@ package com.feelhouette.clothingBrand.service.buyer;
 import com.feelhouette.clothingBrand.model.buyer.Buyer;
 import com.feelhouette.clothingBrand.model.buyer.BuyerRefreshToken;
 import com.feelhouette.clothingBrand.repository.buyer.BuyerRefreshTokenRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -13,9 +14,10 @@ public class BuyerRefreshTokenService {
     private final BuyerRefreshTokenRepository repo;
     private final long refreshTokenMillis;
 
-    public BuyerRefreshTokenService(BuyerRefreshTokenRepository repo, long refreshTokenMillis) {
+    public BuyerRefreshTokenService(BuyerRefreshTokenRepository repo,
+                                    @Value("${jwt.refreshTokenExpirationDays}") long refreshTokenDays) {
         this.repo = repo;
-        this.refreshTokenMillis = refreshTokenMillis;
+        this.refreshTokenMillis = refreshTokenDays * 24L * 60L * 60L * 1000L;
     }
 
     public BuyerRefreshToken createRefreshToken(Buyer buyer) {

@@ -31,13 +31,6 @@ public class ConfirmationToken {
         this.email = email;
         this.expiresAt = expiresAt;
     }
-
-//    // getters & setters omitted for brevity - implement as needed
-//    public UUID getId() { return id; }
-//    public String getToken() { return token; }
-//    public String getEmail() { return email; }
-//    public Instant getExpiresAt() { return expiresAt; }
-//    public boolean isUsed() { return used; }
-//    public void setUsed(boolean used) { this.used = used; }
+    
 }
 

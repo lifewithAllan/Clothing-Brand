@@ -1,5 +1,6 @@
 package com.feelhouette.clothingBrand.model;
 
+import com.feelhouette.clothingBrand.model.buyer.Buyer;
 import jakarta.persistence.*;
 import lombok.Data;
 

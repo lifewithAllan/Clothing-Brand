@@ -1,10 +1,10 @@
 package com.feelhouette.clothingBrand.service.buyer;
 
 import com.feelhouette.clothingBrand.dto.*;
-import com.feelhouette.clothingBrand.model.ConfirmationToken;
 import com.feelhouette.clothingBrand.model.Role;
 import com.feelhouette.clothingBrand.model.buyer.Buyer;
-import com.feelhouette.clothingBrand.repository.ConfirmationTokenRepository;
+import com.feelhouette.clothingBrand.model.buyer.BuyerConfirmationToken;
+import com.feelhouette.clothingBrand.repository.buyer.BuyerConfirmationTokenRepository;
 import com.feelhouette.clothingBrand.repository.buyer.BuyerRepository;
 import com.feelhouette.clothingBrand.service.EmailService;
 import com.feelhouette.clothingBrand.service.JwtService;
@@ -23,14 +23,14 @@ import java.util.UUID;
 @Service
 public class BuyerAuthService {
     private final BuyerRepository buyerRepository;
-    private final ConfirmationTokenRepository tokenRepository;
+    private final BuyerConfirmationTokenRepository tokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final BuyerRefreshTokenService refreshTokenService;
     private final AuthenticationManager authenticationManager;
 
-    public BuyerAuthService(BuyerRepository buyerRepository, ConfirmationTokenRepository tokenRepository, EmailService emailService, PasswordEncoder passwordEncoder, JwtService jwtService, BuyerRefreshTokenService refreshTokenService, AuthenticationManager authenticationManager) {
+    public BuyerAuthService(BuyerRepository buyerRepository, BuyerConfirmationTokenRepository tokenRepository, EmailService emailService, PasswordEncoder passwordEncoder, JwtService jwtService, BuyerRefreshTokenService refreshTokenService, AuthenticationManager authenticationManager) {
         this.buyerRepository = buyerRepository;
         this.tokenRepository = tokenRepository;
         this.emailService = emailService;
@@ -50,7 +50,7 @@ public class BuyerAuthService {
         // create token
         String token = UUID.randomUUID().toString();
         var expiresAt = Instant.now().plus(24, ChronoUnit.HOURS);
-        var conf = new ConfirmationToken(token, email, expiresAt);
+        var conf = new BuyerConfirmationToken(token, email, expiresAt);
         tokenRepository.save(conf);
 
         String confirmationLink = frontendBaseUrl + "/signup/complete?token=" + token;
