@@ -35,8 +35,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Updated CSRF configuration
                 .cors(cors -> cors.configure(http)) // Updated CORS configuration
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**","/api/seller/**","/api/auth/buyer/**", "/api/buyer/account").permitAll()
+                        .requestMatchers("/api/buyer/**").hasRole("BUYER")
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
