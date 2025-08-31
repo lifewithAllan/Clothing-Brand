@@ -1,0 +1,12 @@
+.wrap { position: sticky; top:0; z-index:700; background:#fff; border-bottom: 1px solid #e6e9ef; }
+.top { display:flex; align-items:center; padding:8px 14px; gap:10px; }
+.left { flex-basis: 40px; }
+.center { flex:1; display:flex; justify-content:center; }
+.right { display:flex; align-items:center; gap:8px; }
+.logo { width:36px; height:36px; }
+.brand { margin:0; font-size:18px; }
+.cart { position:relative; background:transparent; border:none; text-decoration:none; color: #111827; font-size:18px; }
+.count { position: absolute; top:-6px; right:-10px; background:#ef4444; color:white; padding:2px 6px; border-radius:999px; font-size:12px; }
+.burger { background:transparent; border:1px solid #e6e9ef; padding:6px 8px; border-radius:8px; cursor:pointer; }
+
+.bottom { padding:10px 14px; border-top:1px solid #f1f5f9; }

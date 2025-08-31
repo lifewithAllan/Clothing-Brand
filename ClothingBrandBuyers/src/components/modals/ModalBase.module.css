@@ -1,0 +1,26 @@
+.overlay {
+  position: fixed; 
+  inset:0; 
+  display:grid; 
+  place-items:center;
+  background: rgba(2,6,23,0.6); 
+  z-index: 1200;
+}
+.panel {
+  width: 100%; 
+  max-width: 520px; 
+  background: #fff; 
+  border-radius: 12px; 
+  padding: 18px; 
+  position: relative;
+  box-shadow: 0 12px 40px rgba(2,6,23,0.4);
+}
+.close {
+  position: absolute; 
+  right: 12px; 
+  top: 12px; 
+  border: none; 
+  background: transparent; 
+  font-size: 20px;
+  cursor: pointer;
+}

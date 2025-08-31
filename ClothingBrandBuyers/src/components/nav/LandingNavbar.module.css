@@ -1,0 +1,35 @@
+.header {
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  padding:12px 18px; 
+  background:#fff;
+  border-bottom: 1px solid #e6e9ef; 
+  position: sticky; 
+  top: 0; 
+  z-index: 600;
+}
+.left, .center, .right { 
+  display:flex; 
+  align-items:center; 
+}
+.center { 
+  justify-content:center; 
+  flex:1; 
+}
+.logo { 
+  width:36px; 
+  height:36px; 
+}
+.brand { 
+  margin:0; 
+  font-size:18px; 
+  letter-spacing: 0.4px; 
+}
+.login { 
+  background:#fd4c2a; 
+  color:#fff; 
+  border:none; 
+  padding:8px 12px; 
+  border-radius:8px; 
+  cursor:pointer; }

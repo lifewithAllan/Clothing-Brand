@@ -14,3 +14,8 @@ export type SignupRequest = {
   email: string;
   frontendBase?: string;
 };
+
+export type ValidateConfirmationResponse = {
+  email: string;
+  expiresAtEpochMillis: number;
+};
