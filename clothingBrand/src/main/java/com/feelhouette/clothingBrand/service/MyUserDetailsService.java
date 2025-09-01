@@ -7,18 +7,32 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+//@Service
+//public class MyUserDetailsService implements UserDetailsService {
+//    private final UserRepository users;
+//
+//    public MyUserDetailsService(UserRepository users) {
+//        this.users = users;
+//    }
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        return users.findByEmail(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + "not found"));
+//    }
+//}
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
-    private final UserRepository users;
 
-    public MyUserDetailsService(UserRepository users) {
-        this.users = users;
+    private final GenericUserDetailsService<User> delegate;
+
+    public MyUserDetailsService(UserRepository userRepository) {
+        this.delegate = new GenericUserDetailsService<>(userRepository::findByEmail);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return users.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User with username: " + username + "not found"));
+    public UserDetails loadUserByUsername(String username) {
+        return delegate.loadUserByUsername(username);
     }
 }
-

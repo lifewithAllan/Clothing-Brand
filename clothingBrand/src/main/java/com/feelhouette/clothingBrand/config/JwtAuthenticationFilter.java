@@ -1,5 +1,6 @@
 package com.feelhouette.clothingBrand.config;
 
+import com.feelhouette.clothingBrand.service.DelegatingUserDetailsService;
 import com.feelhouette.clothingBrand.service.MyUserDetailsService;
 import com.feelhouette.clothingBrand.service.JwtService;
 import jakarta.servlet.FilterChain;
@@ -20,11 +21,11 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final MyUserDetailsService userDetailsService;
+    private final DelegatingUserDetailsService delegatingUserDetailsService;
 
-    public JwtAuthenticationFilter(JwtService jwtService, MyUserDetailsService uds) {
+    public JwtAuthenticationFilter(JwtService jwtService, DelegatingUserDetailsService delegatingUserDetailsService) {
         this.jwtService = jwtService;
-        this.userDetailsService = uds;
+        this.delegatingUserDetailsService = delegatingUserDetailsService;
     }
 
     @Override
@@ -37,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String token = header.substring(7);
             if (jwtService.validateToken(token)) {
                 String username = jwtService.getSubject(token);
-                var userDetails = userDetailsService.loadUserByUsername(username);
+                var userDetails = delegatingUserDetailsService.loadUserByUsername(username);
                 var auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(auth);
