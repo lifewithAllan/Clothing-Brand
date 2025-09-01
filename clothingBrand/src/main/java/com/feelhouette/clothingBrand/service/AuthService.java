@@ -58,6 +58,7 @@ public class AuthService {
 
         String confirmationLink = frontendBaseUrl + "/signup/complete?token=" + token;
         emailService.sendConfirmationEmail(email, confirmationLink);
+        System.out.println("the seller signup request endpoint has been bit successfully");
     }
 
     public ValidateConfirmationResponse validateConfirmationToken(String token) {

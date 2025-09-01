@@ -28,7 +28,7 @@ public class CartService {
     }
 
     private Buyer findBuyerByEmail(String email) {
-        return buyerRepo.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
+        return buyerRepo.fetchByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
     }
 
     // Add to cart

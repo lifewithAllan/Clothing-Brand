@@ -1,6 +1,7 @@
 package com.feelhouette.clothingBrand.service.buyer;
 
 import com.feelhouette.clothingBrand.dto.*;
+import com.feelhouette.clothingBrand.dto.buyer.BuyerTokenRefreshRequest;
 import com.feelhouette.clothingBrand.model.Role;
 import com.feelhouette.clothingBrand.model.buyer.Buyer;
 import com.feelhouette.clothingBrand.model.buyer.BuyerConfirmationToken;
@@ -23,16 +24,16 @@ import java.util.UUID;
 @Service
 public class BuyerAuthService {
     private final BuyerRepository buyerRepository;
-    private final BuyerConfirmationTokenRepository tokenRepository;
+    private final BuyerConfirmationTokenRepository buyerConfirmationTokenRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final BuyerRefreshTokenService refreshTokenService;
     private final AuthenticationManager authenticationManager;
 
-    public BuyerAuthService(BuyerRepository buyerRepository, BuyerConfirmationTokenRepository tokenRepository, EmailService emailService, PasswordEncoder passwordEncoder, JwtService jwtService, BuyerRefreshTokenService refreshTokenService, AuthenticationManager authenticationManager) {
+    public BuyerAuthService(BuyerRepository buyerRepository, BuyerConfirmationTokenRepository buyerConfirmationTokenRepository, EmailService emailService, PasswordEncoder passwordEncoder, JwtService jwtService, BuyerRefreshTokenService refreshTokenService, AuthenticationManager authenticationManager) {
         this.buyerRepository = buyerRepository;
-        this.tokenRepository = tokenRepository;
+        this.buyerConfirmationTokenRepository = buyerConfirmationTokenRepository;
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
@@ -41,9 +42,9 @@ public class BuyerAuthService {
     }
 
     // Step 1: request signup (email only)
-    public void requestSignup(SignupEmailRequest req, String frontendBaseUrl) {
+    public void buyerRequestSignup(SignupEmailRequest req, String frontendBaseUrl) {
         String email = req.email().toLowerCase().trim();
-        if (buyerRepository.existsByEmail(email)) {
+        if (buyerRepository.checkExistenceByEmail(email)) {
             // Don't leak: respond with success but do nothing (or optionally re-send link)
             return;
         }
@@ -51,14 +52,16 @@ public class BuyerAuthService {
         String token = UUID.randomUUID().toString();
         var expiresAt = Instant.now().plus(24, ChronoUnit.HOURS);
         var conf = new BuyerConfirmationToken(token, email, expiresAt);
-        tokenRepository.save(conf);
+        System.out.println(conf);
+        buyerConfirmationTokenRepository.save(conf);
 
         String confirmationLink = frontendBaseUrl + "/signup/complete?token=" + token;
         emailService.sendConfirmationEmail(email, confirmationLink);
+        System.out.println("buyer request signup endpoint has been bit successfully");
     }
 
     public ValidateConfirmationResponse validateConfirmationToken(String token) {
-        var optional = tokenRepository.findByToken(token);
+        var optional = buyerConfirmationTokenRepository.findByToken(token);
         var ct = optional.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid token"));
         if (ct.isUsed()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token already used");
         if (ct.getExpiresAt().isBefore(Instant.now())) throw new ResponseStatusException(HttpStatus.GONE, "Token expired");
@@ -66,7 +69,7 @@ public class BuyerAuthService {
     }
 
     public void completeSignup(SignupCompleteRequest req) {
-        var token = tokenRepository.findByToken(req.token())
+        var token = buyerConfirmationTokenRepository.findByToken(req.token())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid token"));
 
         if (token.isUsed() || token.getExpiresAt().isBefore(Instant.now())) {
@@ -74,7 +77,7 @@ public class BuyerAuthService {
         }
 
         String email = token.getEmail().toLowerCase().trim();
-        if (buyerRepository.existsByEmail(email)) {
+        if (buyerRepository.checkExistenceByEmail(email)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         }
 
@@ -86,7 +89,7 @@ public class BuyerAuthService {
         buyerRepository.save(buyer);
 
         token.setUsed(true);
-        tokenRepository.save(token);
+        buyerConfirmationTokenRepository.save(token);
     }
 
     public AuthResponse login(AuthRequest request) {
@@ -96,7 +99,7 @@ public class BuyerAuthService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
 
-        var user = buyerRepository.findByEmail(request.email()).orElseThrow(() ->
+        var user = buyerRepository.fetchByEmail(request.email()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         String accessToken = jwtService.generateAccessToken(user.getEmail(), user.getRoles());
@@ -105,8 +108,8 @@ public class BuyerAuthService {
         return new AuthResponse(accessToken, refreshToken.getToken(), "Bearer", java.time.Instant.now().plusMillis(15*60*1000).toEpochMilli());
     }
 
-    public AuthResponse refreshToken(TokenRefreshRequest req) {
-        var rt = refreshTokenService.findByToken(req.refreshToken());
+    public AuthResponse refreshToken(BuyerTokenRefreshRequest req) {
+        var rt = refreshTokenService.findByToken(req.buyerRefreshToken());
         if (rt == null || rt.isRevoked() || rt.getExpiresAt().isBefore(Instant.now())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Refresh token invalid or expired");
         }
@@ -120,8 +123,8 @@ public class BuyerAuthService {
         return new AuthResponse(accessToken, newRt.getToken(), "Bearer", Instant.now().plusMillis(15*60*1000).toEpochMilli());
     }
 
-    public void logout(TokenRefreshRequest req) {
-        var rt = refreshTokenService.findByToken(req.refreshToken());
+    public void logout(BuyerTokenRefreshRequest req) {
+        var rt = refreshTokenService.findByToken(req.buyerRefreshToken());
         if (rt != null) {
             refreshTokenService.revoke(rt);
         }

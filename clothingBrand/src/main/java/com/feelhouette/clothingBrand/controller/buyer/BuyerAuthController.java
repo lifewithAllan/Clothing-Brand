@@ -1,6 +1,7 @@
 package com.feelhouette.clothingBrand.controller.buyer;
 
 import com.feelhouette.clothingBrand.dto.*;
+import com.feelhouette.clothingBrand.dto.buyer.BuyerTokenRefreshRequest;
 import com.feelhouette.clothingBrand.service.buyer.BuyerAuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,12 @@ public class BuyerAuthController {
         this.auth = auth;
     }
 
-    @PostMapping("/request-signup")
+    @PostMapping("/buyer-request-signup")
     public ResponseEntity<Void> requestSignup(@RequestBody @Valid SignupEmailRequest req,
                                               @RequestHeader(value = "X-FRONTEND-BASE-URL", required = false) String frontendBase) {
         var base = frontendBase == null ? "http://localhost:5173" : frontendBase;
-        auth.requestSignup(req, base);
+        auth.buyerRequestSignup(req, base);
+        System.out.println("buyer endpoint hit");
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
@@ -44,13 +46,13 @@ public class BuyerAuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<AuthResponse> refresh(@RequestBody @Valid TokenRefreshRequest req) {
+    public ResponseEntity<AuthResponse> refresh(@RequestBody @Valid BuyerTokenRefreshRequest req) {
         var res = auth.refreshToken(req);
         return ResponseEntity.ok(res);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody TokenRefreshRequest req) {
+    public ResponseEntity<Void> logout(@RequestBody BuyerTokenRefreshRequest req) {
         auth.logout(req);
         return ResponseEntity.noContent().build();
     }

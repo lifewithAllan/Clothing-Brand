@@ -41,7 +41,7 @@ public class BuyerAccountService {
     }
 
     public void requestPasswordReset(String email) {
-        var buyer = buyerRepo.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
+        var buyer = buyerRepo.fetchByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
         String token = UUID.randomUUID().toString();
         var expires = Instant.now().plus(2, ChronoUnit.HOURS);
         var prt = new PasswordResetToken(token, buyer, expires);
@@ -64,7 +64,7 @@ public class BuyerAccountService {
     }
 
     public void requestAccountDeletion(String email) {
-        var buyer = buyerRepo.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
+        var buyer = buyerRepo.fetchByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
         String token = UUID.randomUUID().toString();
         var expires = Instant.now().plus(24, ChronoUnit.HOURS);
         var dat = new DeleteAccountToken(token, buyer, expires);

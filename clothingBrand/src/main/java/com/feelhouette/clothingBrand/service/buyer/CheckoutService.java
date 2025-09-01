@@ -30,7 +30,7 @@ public class CheckoutService {
     }
 
     private Buyer findBuyer(String email) {
-        return buyerRepo.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
+        return buyerRepo.fetchByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
     }
 
     public String checkout(String buyerEmail, CheckoutDTO dto) {

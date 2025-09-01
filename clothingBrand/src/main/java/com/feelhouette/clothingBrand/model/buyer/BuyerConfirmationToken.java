@@ -1,5 +1,6 @@
 package com.feelhouette.clothingBrand.model.buyer;
 
+import com.feelhouette.clothingBrand.model.AbstractConfirmationToken;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -35,4 +36,15 @@ public class BuyerConfirmationToken {
 
 }
 
-
+//// 3. BUYER-SPECIFIC TOKEN ENTITY
+//@Data
+//@Entity
+//@Table(name = "buyer_confirmation_tokens")
+//public class BuyerConfirmationToken extends AbstractConfirmationToken {
+//
+//    public BuyerConfirmationToken(String token, String email, Instant expiresAt) {
+//        this.setToken(token);
+//        this.setEmail(email);
+//        this.setExpiresAt(expiresAt);
+//    }
+//}

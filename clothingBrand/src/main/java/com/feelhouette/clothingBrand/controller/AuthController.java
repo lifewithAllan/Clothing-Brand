@@ -22,6 +22,7 @@ public class AuthController {
                                               @RequestHeader(value = "X-FRONTEND-BASE-URL", required = false) String frontendBase) {
         var base = frontendBase == null ? "http://localhost:5173" : frontendBase;
         auth.requestSignup(req, base);
+        System.out.println("seller endpoint hit");
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
