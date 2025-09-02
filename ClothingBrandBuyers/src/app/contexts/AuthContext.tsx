@@ -71,6 +71,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     await axios.post(`${API_BASE}/api/buyer/account/forgot-password`, { email });
   }, []);
 
+  // logout
   const logout = useCallback(() => {
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {

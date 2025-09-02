@@ -2,13 +2,36 @@ import React from 'react';
 import styles from './HamburgerMenu.module.css';
 import { useUI } from '../../app/contexts/UIContext';
 import { useAuth } from '../../app/contexts/AuthContext';
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+import axios from 'axios';
 
 const HamburgerMenu: React.FC = () => {
   const { menuOpen, toggleMenu } = useUI();
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   if (!menuOpen) return null;
+
+  // Handle account deletion request
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    if (!confirmed) return;
+
+    try {
+      await axios.post(`${import.meta.env.VITE_API_BASE}/api/buyer/account/delete/request`, 
+        { email: user?.email },
+        {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // auth header
+        },
+      });
+      alert("A confirmation email has been sent. Please check your inbox to complete account deletion.");
+      toggleMenu(false);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to send account deletion email. Please try again later.");
+    }
+  };
 
   return (
     <div className={styles.overlay} onClick={() => toggleMenu(false)}>
@@ -29,7 +52,8 @@ const HamburgerMenu: React.FC = () => {
         </nav>
 
         <div className={styles.bottom}>
-          <button className={styles.logout} onClick={() => { logout(); toggleMenu(false); }}>Logout</button>
+          <button className={styles.logout} onClick={() => { logout(); toggleMenu(false); navigate('/', { replace: true });}}>Logout</button>
+          <button className={styles.deleteAccount} onClick={handleDeleteAccount}>Delete Account</button>
         </div>
       </aside>
     </div>

@@ -2,7 +2,7 @@ import { api } from './axiosClient';
 import type { LoginRequest, SignupRequest, AuthResponse } from '../types/auth';
 import { API_BASE, FRONTEND_BASE } from '../constants/config';
 
-// login used by both buyer + seller fronts (same endpoint)
+// login
 export async function login(payload: LoginRequest): Promise<AuthResponse> {
   const { data } = await api.post<AuthResponse>('/api/auth/buyer/login', payload);
   return data;
@@ -27,5 +27,5 @@ export async function completePasswordReset(token: string, newPassword: string) 
 
 // request account deletion (sends email)
 export async function requestDeleteAccount(email: string) {
-  await api.post('/api/buyer/account/request-delete', { email });
+  await api.post('/api/buyer/account/delete/request', { email });
 }

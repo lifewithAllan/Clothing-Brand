@@ -1,15 +1,91 @@
-.overlay { position: fixed; inset:0; z-index:900; background: rgba(0,0,0,0.35); display:flex; }
-.panel {
-  width: 33vw; min-width:260px; max-width:420px; background:#fff; padding:18px;
-  transform: translateX(0); animation: slideIn .22s ease forwards;
+.overlay { 
+  position: fixed; 
+  inset: 0; 
+  z-index: 900; 
+  background: rgba(0,0,0,0.35); 
+  display: flex; 
+  justify-content: flex-end;   /* 👈 pushes panel to the right */
 }
-@keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-.close { position:absolute; right:10px; top:10px; background:transparent; border:none; font-size:20px; }
-.user { padding:12px 0; border-bottom:1px solid #eef2f7; margin-bottom:10px; }
-.name { font-weight:700; }
-.nav { display:flex; flex-direction:column; gap:8px; padding:12px 0; }
-.nav a { padding:8px 10px; text-decoration:none; color:#111827; border-radius:8px; }
-.nav a:hover { background:#f8fafc; }
-.active { background:#eef2ff; font-weight:700; }
-.bottom { margin-top:auto; display:flex; justify-content:center; }
-.logout { background:#ef4444; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; }
+
+.panel {
+  width: 33vw; 
+  min-width: 260px; 
+  max-width: 420px; 
+  background: #fff; 
+  padding: 18px;
+  transform: translateX(100%);  /* 👈 start off-screen on the right */
+  animation: slideInRight .22s ease forwards; /* 👈 use new keyframes */
+}
+
+@keyframes slideInRight { 
+  from { transform: translateX(100%); }   /* 👈 off-screen right */
+  to { transform: translateX(0); }        /* 👈 visible */
+}
+
+.close { 
+  position: absolute; 
+  right: 10px; 
+  top: 10px; 
+  background: transparent; 
+  border: none; 
+  font-size: 20px; 
+}
+
+.user { 
+  padding: 12px 0; 
+  border-bottom: 1px solid #eef2f7; 
+  margin-bottom: 10px; 
+}
+
+.name { 
+  font-weight: 700; 
+}
+
+.nav { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
+  padding: 12px 0; 
+}
+
+.nav a { 
+  padding: 8px 10px; 
+  text-decoration: none; 
+  color: #111827; 
+  border-radius: 8px; 
+}
+
+.nav a:hover { 
+  background: #f8fafc; 
+}
+
+.active { 
+  background: #eef2ff; 
+  font-weight: 700; 
+}
+
+.bottom { 
+  margin-top: auto; 
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  gap: 10px;
+}
+
+.logout { 
+  background: #ef4444; 
+  color: #fff; 
+  border: none; 
+  padding: 8px 12px; 
+  border-radius: 8px; 
+  cursor: pointer; 
+}
+
+.deleteAccount { 
+  background: #ef4444; 
+  color: #fff; 
+  border: none; 
+  padding: 8px 12px; 
+  border-radius: 8px; 
+  cursor: pointer; 
+}
