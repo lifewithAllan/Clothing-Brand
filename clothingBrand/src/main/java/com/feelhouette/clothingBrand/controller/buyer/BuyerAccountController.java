@@ -25,10 +25,11 @@ public class BuyerAccountController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody PasswordResetCompleteRequest req) {
         service.completePasswordReset(req.token(), req.newPassword());
+        System.out.println("reset password endpoint hit");
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/request-delete")
+    @PostMapping("/delete/request")
     public ResponseEntity<?> requestDelete(@RequestBody DeleteAccountRequest req) {
         service.requestAccountDeletion(req.email());
         return ResponseEntity.accepted().build();

@@ -31,7 +31,7 @@ public class BuyerAccountService {
                                DeleteAccountTokenRepository deleteRepo,
                                EmailService emailService,
                                PasswordEncoder passwordEncoder,
-                               @Value("${app.frontend.base:http://localhost:3000}") String frontendBase) {
+                               @Value("${app.frontend.base:http://localhost:5173}") String frontendBase) {
         this.buyerRepo = buyerRepo;
         this.resetRepo = resetRepo;
         this.deleteRepo = deleteRepo;
@@ -64,7 +64,7 @@ public class BuyerAccountService {
     }
 
     public void requestAccountDeletion(String email) {
-        var buyer = buyerRepo.fetchByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer not found"));
+        var buyer = buyerRepo.fetchByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer with email :" +email + " not found"));
         String token = UUID.randomUUID().toString();
         var expires = Instant.now().plus(24, ChronoUnit.HOURS);
         var dat = new DeleteAccountToken(token, buyer, expires);
