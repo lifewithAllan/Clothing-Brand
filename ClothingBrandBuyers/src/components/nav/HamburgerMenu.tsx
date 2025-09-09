@@ -27,6 +27,8 @@ const HamburgerMenu: React.FC = () => {
       });
       alert("A confirmation email has been sent. Please check your inbox to complete account deletion.");
       toggleMenu(false);
+      logout();
+      navigate('/', { replace: true });
     } catch (err) {
       console.error(err);
       alert("Failed to send account deletion email. Please try again later.");
