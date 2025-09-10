@@ -38,6 +38,15 @@ public class Buyer implements UserDetails {
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DeleteAccountToken> deleteAccountTokens = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PasswordResetToken> passwordResetTokens = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BuyerRefreshToken> refreshTokens = new ArrayList<>();
+
     private Instant createdAt = Instant.now();
     private Instant updatedAt = Instant.now();
 

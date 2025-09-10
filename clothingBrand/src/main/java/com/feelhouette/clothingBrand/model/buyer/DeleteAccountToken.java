@@ -24,6 +24,9 @@ public class DeleteAccountToken {
     private Instant expiresAt;
     private boolean used = false;
 
+    @Version // 👈 Add this
+    private Long version;
+
     public DeleteAccountToken() {}
 
     public DeleteAccountToken(String token, Buyer buyer, Instant expiresAt) {

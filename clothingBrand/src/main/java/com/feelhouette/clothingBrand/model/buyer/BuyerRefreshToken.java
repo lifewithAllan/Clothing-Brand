@@ -17,8 +17,12 @@ public class BuyerRefreshToken {
     @Column(nullable = false, unique = true)
     private String token;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private Buyer buyer;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "buyer_id"/*, nullable = false*/)
     private Buyer buyer;
 
     private Instant expiresAt;

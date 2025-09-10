@@ -7,11 +7,14 @@ import com.feelhouette.clothingBrand.repository.buyer.BuyerRepository;
 import com.feelhouette.clothingBrand.repository.buyer.DeleteAccountTokenRepository;
 import com.feelhouette.clothingBrand.repository.buyer.PasswordResetTokenRepository;
 import com.feelhouette.clothingBrand.service.EmailService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -19,6 +22,10 @@ import java.util.UUID;
 
 @Service
 public class BuyerAccountService {
+
+    private static final Logger log = LoggerFactory.getLogger(BuyerAccountService.class);
+
+
     private final BuyerRepository buyerRepo;
     private final PasswordResetTokenRepository resetRepo;
     private final DeleteAccountTokenRepository deleteRepo;
@@ -63,27 +70,39 @@ public class BuyerAccountService {
         resetRepo.save(prt);
     }
 
+    @Transactional
     public void requestAccountDeletion(String email) {
         var buyer = buyerRepo.fetchByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Buyer with email :" +email + " not found"));
         String token = UUID.randomUUID().toString();
+        System.out.println("THE DELETE ACCOUNT TOKEN GENERATED IS: " + token);
         var expires = Instant.now().plus(24, ChronoUnit.HOURS);
         var dat = new DeleteAccountToken(token, buyer, expires);
         deleteRepo.save(dat);
 
         String link = frontendBase + "/confirm-delete-account?token=" + token;
         emailService.sendDeleteAccountEmail(buyer.getEmail(), link);
+        log.info("Generated token: {}", token);
     }
 
+    @Transactional
     public void confirmAccountDeletion(String token) {
-        var dat = deleteRepo.findByToken(token).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid token"));
-        if (dat.isUsed() || dat.getExpiresAt().isBefore(Instant.now())) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token invalid/expired");
+        log.info("Received token for confirmation: {}", token);
 
-        Buyer buyer = dat.getBuyer();
+        var dat = deleteRepo.findByToken(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Token not found"));
 
-        // Delete buyer and cascade will remove cart and orders
-        buyerRepo.delete(buyer);
+        if (dat.isUsed()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Token has already been used");
+        }
+
+        if (dat.getExpiresAt().isBefore(Instant.now())) {
+            throw new ResponseStatusException(HttpStatus.GONE, "Token has expired");
+        }
 
         dat.setUsed(true);
         deleteRepo.save(dat);
+
+        Buyer buyer = dat.getBuyer();
+        buyerRepo.delete(buyer);
     }
 }
