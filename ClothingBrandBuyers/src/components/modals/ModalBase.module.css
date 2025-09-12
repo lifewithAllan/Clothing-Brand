@@ -1,26 +1,69 @@
 .overlay {
-  position: fixed; 
-  inset:0; 
-  display:grid; 
-  place-items:center;
-  background: rgba(2,6,23,0.6); 
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(2, 6, 23, 0.6);
   z-index: 1200;
+  padding: 12px; /* ensure spacing on small screens */
 }
+
 .panel {
-  width: 100%; 
-  max-width: 520px; 
-  background: #fff; 
-  border-radius: 12px; 
-  padding: 18px; 
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
   position: relative;
-  box-shadow: 0 12px 40px rgba(2,6,23,0.4);
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.4);
+  animation: fadeIn 0.25s ease;
 }
+
 .close {
-  position: absolute; 
-  right: 12px; 
-  top: 12px; 
-  border: none; 
-  background: transparent; 
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  border: none;
+  background: transparent;
   font-size: 20px;
   cursor: pointer;
+  color: #374151;
+  transition: transform 0.2s ease;
+}
+
+.close:hover {
+  transform: scale(1.1);
+}
+
+/* Small devices */
+@media (max-width: 480px) {
+  .panel {
+    max-width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+  }
+  .close {
+    font-size: 18px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) {
+  .panel {
+    max-width: 600px;
+    padding: 20px;
+  }
+}
+
+/* Large desktops */
+@media (min-width: 1200px) {
+  .panel {
+    max-width: 600px;
+    padding: 24px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

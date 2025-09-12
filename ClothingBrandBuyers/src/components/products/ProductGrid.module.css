@@ -1,4 +1,34 @@
-.grid { display:grid; gap:12px; grid-template-columns: 1fr; }
-@media (min-width:600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width:900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width:1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr); /* default: 2 cards per row, even on small phones */
+  padding: 10px;
+}
+
+/* Tablet portrait (~600px and up) → 3 cards */
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet landscape / small laptop (~900px and up) → 4 cards */
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Desktop (~1200px and up) → 5 cards */
+@media (min-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Big monitors (~1600px and up) → 6 cards */
+@media (min-width: 1600px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

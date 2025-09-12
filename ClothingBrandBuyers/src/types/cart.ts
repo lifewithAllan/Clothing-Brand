@@ -6,7 +6,7 @@ export type CartItemRequest = {
   customNumber?: string | null;
   quantity?: number;
   // badges selected (persisted) — array of badge names
-  badgesSelected?: string[];
+  badges?: string[];
 };
 
 export type CartItem = {
@@ -21,5 +21,5 @@ export type CartItem = {
   unitPrice: number;
   itemTotal: number;
   frontImageUrl?: string;
-  badgesSelected?: string[];
+  badges?: string[];
 };

@@ -41,8 +41,7 @@ const HamburgerMenu: React.FC = () => {
         <button className={styles.close} onClick={() => toggleMenu(false)}>×</button>
 
         <div className={styles.user}>
-          <div className={styles.name}>{user?.firstName ?? 'Buyer'}</div>
-          <div className={styles.name}>{user?.lastName ?? 'Buyer'}</div>
+          <div className={styles.name}>Hello</div>
           <div className={styles.name}>{user?.email ?? 'Buyer'}</div>
         </div>
 
