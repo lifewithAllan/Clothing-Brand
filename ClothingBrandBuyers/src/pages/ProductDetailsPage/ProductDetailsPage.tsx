@@ -68,7 +68,7 @@ const ProductDetailsPage: React.FC = () => {
         customName: customName || null,
         customNumber: customNumber || null,
         quantity,
-        badgesSelected: selectedBadges,
+        badges: selectedBadges,
       });
       alert('Added to cart');
       navigate('/cart');

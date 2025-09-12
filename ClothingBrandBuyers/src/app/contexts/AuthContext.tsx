@@ -16,7 +16,7 @@ export const authBridge = new AuthBridgeClass();*/
 
 type AuthContextType = {
   accessToken: string | null;
-  user?: { email: string; firstName: string; lastName: string; } | null;
+  user?: { email: string; } | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (payload: LoginRequest) => Promise<void>;
@@ -92,8 +92,10 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
         return;
       }
       try {
-        const { data } = await axios.post<AuthResponse>(`${API_BASE}/api/auth/buyer/refresh`, { refreshToken: refresh });
+        const { data } = await axios.post<AuthResponse>(`${API_BASE}/api/auth/buyer/refresh`, { buyerRefreshToken: refresh });
         internalSetTokens(data.accessToken, data.refreshToken);
+        //console.log('Sending refresh token:', refresh);
+
       } catch {
         localStorage.removeItem('refreshToken');
       } finally {
