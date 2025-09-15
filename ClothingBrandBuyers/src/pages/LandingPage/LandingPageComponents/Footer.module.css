@@ -1,4 +1,3 @@
-/* components/Footer/Footer.module.css */
 .footer {
   background-color: #0c1a32;
   color: white;
@@ -136,16 +135,32 @@
   font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* ---------- Responsive Design ---------- */
 @media (min-width: 768px) {
   .footer {
-    padding: 4rem 2rem 1.5rem;
+    padding: 2.5rem 1.5rem 1rem;
   }
   
   .footerContent {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
+  /* Make Quick Links + Support side by side */
+  .footerSection:nth-child(2),
+  .footerSection:nth-child(3) {
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+
+  .footerLinks a {
+    font-size: 0.95rem;
+  }
+
   .newsletterForm {
     flex-direction: row;
   }
@@ -155,8 +170,56 @@
   }
 }
 
+/* Large screens (desktop): 4-column layout */
 @media (min-width: 1024px) {
   .footerContent {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .footerSection:nth-child(2),
+  .footerSection:nth-child(3) {
+    display: block;
+    width: auto;
+  }
+}
+
+/* Smartphones: even more compact */
+@media (max-width: 767px) {
+  .footer {
+    padding: 2rem 1rem 0.8rem;
+  }
+
+  .footerTitle {
+    font-size: 1.4rem;
+  }
+
+  .footerDescription {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .footerLinks a {
+    font-size: 0.85rem;
+  }
+
+  .newsletterTitle {
+    font-size: 0.9rem;
+  }
+
+  .newsletterInput,
+  .newsletterButton {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .footerBottom {
+    font-size: 0.75rem;
+    padding-top: 1rem;
+    margin-top: 1rem;
   }
 }

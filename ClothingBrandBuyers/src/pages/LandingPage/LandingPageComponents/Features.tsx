@@ -15,31 +15,31 @@ const Features: React.FC = () => {
       id: 1,
       title: "Authentic Jerseys",
       description: "All our jerseys are 100% authentic with official licensing",
-      image: "/images/authentic.jpg"
+      image: "/authentic.jpg"
     },
     {
       id: 2,
       title: "Fast Shipping",
       description: "Get your jersey in 2-3 business days with our express shipping",
-      image: "/images/shipping.jpg"
+      image: "/fast-shipping.jpg"
     },
     {
       id: 3,
       title: "Easy Returns",
       description: "Not satisfied? Return within 30 days for a full refund",
-      image: "/images/returns.jpg"
+      image: "/easy-returns.png"
     },
     {
       id: 4,
       title: "Customization",
       description: "Add your name and number to make it truly yours",
-      image: "/images/customization.jpg"
+      image: "/customization.png"
     },
     {
       id: 5,
       title: "Exclusive Deals",
       description: "Get access to member-only sales and promotions",
-      image: "/images/deals.jpg"
+      image: "/exclusive-deals.png"
     }
   ];
 

@@ -1,13 +1,13 @@
-/* components/HeroSection/HeroSection.module.css */
 .hero {
   position: relative;
-  height: 100vh;
+  min-height: 100vh; /* default for desktops */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
+/* Video fills hero container */
 .videoContainer {
   position: absolute;
   top: 0;
@@ -25,15 +25,9 @@
 }
 
 @keyframes slowMotion {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 .overlay {
@@ -55,34 +49,31 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+/* ✅ Responsive typography with clamp */
 .title {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
 .subtitle {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   margin-bottom: 2rem;
   max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ctaButton {
   background-color: #fd4c2a;
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
+  padding: clamp(0.7rem, 2vw, 1rem) clamp(1.2rem, 4vw, 2rem);
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -95,28 +86,29 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive Design */
-@media (min-width: 768px) {
-  .title {
-    font-size: 3.5rem;
-  }
-  
-  .subtitle {
-    font-size: 1.5rem;
+/* ---------- Tablet & Mobile Height Fix ---------- */
+
+/* Tablets: reduce hero height */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .hero {
+    min-height: 70vh; /* reduced from 100vh */
   }
 }
 
-@media (max-width: 480px) {
-  .title {
-    font-size: 2rem;
+/* Smartphones: even smaller hero */
+@media (max-width: 767px) {
+  .hero {
+    min-height: 60vh; /* compact for phones */
   }
-  
+
   .subtitle {
-    font-size: 1rem;
+    max-width: 90%;
   }
-  
-  .ctaButton {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  .hero {
+    min-height: 55vh; /* keep it short */
   }
 }

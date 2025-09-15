@@ -1,14 +1,15 @@
 /* components/Sponsors/Sponsors.module.css */
+
 .sponsors {
-  padding: 4rem 1rem;
+  padding: 2rem 1rem; /* reduced from 4rem */
   background-color: #1d3557;
   color: white;
 }
 
 .sectionTitle {
   text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 2.5rem;
+  font-size: 1.6rem; /* reduced from 2.2rem */
+  margin-bottom: 1.5rem; /* reduced from 2.5rem */
   position: relative;
   color: white;
 }
@@ -16,11 +17,11 @@
 .sectionTitle::after {
   content: '';
   position: absolute;
-  bottom: -10px;
+  bottom: -8px; /* slightly reduced */
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
+  width: 60px; /* reduced width */
+  height: 3px; /* reduced height */
   background-color: #fd4c2a;
   border-radius: 2px;
 }
@@ -29,27 +30,23 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  max-width: 1200px;
+  gap: 0.5rem; /* tighter spacing */
+  max-width: 1000px;
   margin: 0 auto;
-  padding-bottom: 5px;
 }
 
 .logoItem {
-  flex: 0 0 40%;
+  flex: 0 0 calc(33.333% - 0.5rem);
+  aspect-ratio: 5 / 2.5;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1.5rem;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  overflow: hidden;
   transition: transform 0.3s ease, background 0.3s ease;
   animation: fadeInUp 0.6s ease-out;
 }
 
 .logoItem:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
   background: rgba(255, 255, 255, 0.15);
 }
 
@@ -65,11 +62,12 @@
 }
 
 .logoImage {
-  max-width: 100%;
-  height: auto;
-  filter: brightness(0) invert(1);
-  opacity: 0.8;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
   transition: opacity 0.3s ease;
+  border-radius: 0;
 }
 
 .logoItem:hover .logoImage {
@@ -77,22 +75,17 @@
 }
 
 /* Responsive Design */
-@media (min-width: 480px) {
-  .logoItem {
-    flex: 0 0 30%;
-  }
-}
-
 @media (min-width: 768px) {
   .sponsors {
-    padding: 5rem 2rem;
+    padding: 3rem 1.5rem; /* slightly more on larger screens */
   }
-  
+
   .sectionTitle {
-    font-size: 2.5rem;
+    font-size: 1.8rem; /* slightly larger on desktop */
   }
-  
+
   .logoItem {
-    flex: 0 0 18%;
+    flex: 0 0 calc(14.28% - 0.5rem); /* 7 logos in one row */
+    aspect-ratio: 5 / 2.5;
   }
 }

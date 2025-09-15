@@ -4,12 +4,12 @@ import styles from './Sponsors.module.css';
 
 const Sponsors: React.FC = () => {
   const sponsors = [
-    { id: 1, name: 'Nike', logo: '/logos/nike.svg' },
-    { id: 2, name: 'Adidas', logo: '/logos/adidas.svg' },
-    { id: 3, name: 'Puma', logo: '/logos/puma.svg' },
-    { id: 4, name: 'New Balance', logo: '/logos/new-balance.svg' },
-    { id: 5, name: 'Jerseybird', logo: '/logos/jerseybird.svg' },
-    { id: 6, name: 'Under Amour', logo: '/logos/UnderAmour.svg' },
+    { id: 1, name: 'Nike', logo: '/nike.jpg' },
+    { id: 2, name: 'Adidas', logo: '/adidas.jpg' },
+    { id: 3, name: 'Puma', logo: '/puma.jpg' },
+    { id: 4, name: 'New Balance', logo: '/new-balance.jpg' },
+    { id: 5, name: 'Jerseybird', logo: '/jersey-bird.jpg' },
+    { id: 6, name: 'Under Amour', logo: '/under-armour.jpg' },
   ];
 
   return (
