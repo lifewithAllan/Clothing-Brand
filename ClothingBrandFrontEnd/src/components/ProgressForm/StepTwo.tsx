@@ -16,28 +16,36 @@ const StepTwo: React.FC<Props> = ({ value, onChange }) => {
     listLeagues().then(setLeagues).finally(() => setLoading(false));
   }, []);
 
+  const toggleLeague = (id: number) => {
+    onChange((s: any) => {
+      const leagueIds: number[] = s.leagueIds ?? [];
+      return leagueIds.includes(id)
+        ? { ...s, leagueIds: leagueIds.filter(l => l !== id) }
+        : { ...s, leagueIds: [...leagueIds, id] };
+    });
+  };
+
   return (
     <div className={styles.card}>
       <h3 className={styles.h3}>League Selection</h3>
-      {loading ? <div>Loading leagues…</div> : (
-        <label className={styles.label}>
-          League
-          <select
-            className={styles.input}
-            value={value.leagueId ?? ''}
-            onChange={(e) => onChange((s: any) => ({ ...s, leagueId: Number(e.target.value) }))}
-          >
-            <option value="" disabled>Select a league</option>
-            {leagues.map(l => (
-              <option key={l.id} value={l.id}>
-                {l.leagueName} — {l.fontType.replace('_', ' ')}
-              </option>
-            ))}
-          </select>
-        </label>
+      {loading ? (
+        <div>Loading leagues…</div>
+      ) : (
+        <div className={styles.group}>
+          {leagues.map(l => (
+            <label key={l.id} className={styles.checkboxRow}>
+              <input
+                type="checkbox"
+                checked={(value.leagueIds ?? []).includes(l.id)}
+                onChange={() => toggleLeague(l.id)}
+              />
+              <span>{l.leagueName} — {l.fontType.replace('_', ' ')}</span>
+            </label>
+          ))}
+        </div>
       )}
       <p className={styles.help}>
-        Fonts and badges are managed under "Leagues". Here you just attach the jersey to one league (as supported by current backend).
+        You can select multiple leagues if this jersey applies to more than one.
       </p>
     </div>
   );

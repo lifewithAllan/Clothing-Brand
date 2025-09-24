@@ -23,7 +23,7 @@ const AddProductForm: React.FC = () => {
     backImageUrl: '',
     basePrice: undefined,
     discountedPrice: undefined,
-    leagueId: undefined,
+    leagueIds: [],
   });
 
   const canNext = useMemo(() => {
@@ -31,7 +31,7 @@ const AddProductForm: React.FC = () => {
       return Boolean(form.jerseyName && form.season && form.kitVersion);
     }
     if (active === 1) {
-      return typeof form.leagueId === 'number';
+      return (form.leagueIds?.length ?? 0) > 0;
     }
     if (active === 2) {
       const hasImages = !!form.frontImageUrl && !!form.sideImageUrl && !!form.backImageUrl;

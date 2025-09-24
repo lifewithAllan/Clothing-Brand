@@ -5,7 +5,7 @@ import ImageCarousel from '../../components/Carousel/ImageCarousel';
 import { deleteJersey, listJerseys, updateJerseyPriceAndSizes } from '../../api/productApi';
 import type { Jersey } from '../../types/seller';
 
-const ALL_SIZES = ['S','M','L','XL','XXL','3XL'];
+const ALL_SIZES = ['S', 'M', 'L', 'XL', 'XXL', '3XL'];
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams();
@@ -36,7 +36,9 @@ const ProductDetails: React.FC = () => {
   }, [product]);
 
   const toggleSize = (sz: string) => {
-    setSizes(prev => prev.includes(sz) ? prev.filter(s => s !== sz) : [...prev, sz]);
+    setSizes(prev =>
+      prev.includes(sz) ? prev.filter(s => s !== sz) : [...prev, sz]
+    );
   };
 
   const onSave = async () => {
@@ -50,7 +52,7 @@ const ProductDetails: React.FC = () => {
         sizes
       );
       // replace in local list
-      setItems(list => list.map(i => i.id === updated.id ? updated : i));
+      setItems(list => list.map(i => (i.id === updated.id ? updated : i)));
     } finally {
       setSaving(false);
     }
@@ -77,11 +79,18 @@ const ProductDetails: React.FC = () => {
       <div className={styles.right}>
         <h2 className={styles.title}>{product.jerseyName}</h2>
         <div className={styles.meta}>
-          <span>{product.season}</span> • <span>{product.kitVersion}</span> • <span>{product.leagueName}</span>
+          <span>{product.season}</span>  <span>{product.kitVersion} Version</span> <br />
+          {product.leagueNames && product.leagueNames.length > 0 && (
+            <>
+              {' '}<span>{product.leagueNames.join(', ')}</span>
+            </>
+          )}
         </div>
 
         <ul className={styles.desc}>
-          {product.descriptionPoints.map((d, i) => <li key={`${d}-${i}`}>{d}</li>)}
+          {product.descriptionPoints.map((d, i) => (
+            <li key={`${d}-${i}`}>{d}</li>
+          ))}
         </ul>
 
         <div className={styles.panel}>
@@ -95,7 +104,9 @@ const ProductDetails: React.FC = () => {
                 min="0"
                 step="0.01"
                 value={basePrice}
-                onChange={(e) => setBasePrice(e.target.value ? Number(e.target.value) : '')}
+                onChange={e =>
+                  setBasePrice(e.target.value ? Number(e.target.value) : '')
+                }
               />
             </label>
             <label className={styles.label}>
@@ -106,7 +117,9 @@ const ProductDetails: React.FC = () => {
                 min="0"
                 step="0.01"
                 value={discountedPrice}
-                onChange={(e) => setDiscountedPrice(e.target.value ? Number(e.target.value) : '')}
+                onChange={e =>
+                  setDiscountedPrice(e.target.value ? Number(e.target.value) : '')
+                }
               />
             </label>
           </div>
@@ -114,17 +127,27 @@ const ProductDetails: React.FC = () => {
           <div className={styles.sizes}>
             {ALL_SIZES.map(sz => (
               <label key={sz} className={styles.sizeChip}>
-                <input type="checkbox" checked={sizes.includes(sz)} onChange={() => toggleSize(sz)} />
+                <input
+                  type="checkbox"
+                  checked={sizes.includes(sz)}
+                  onChange={() => toggleSize(sz)}
+                />
                 <span>{sz}</span>
               </label>
             ))}
           </div>
 
           <div className={styles.actions}>
-            <button className={styles.primary} disabled={saving || typeof basePrice !== 'number'} onClick={onSave}>
+            <button
+              className={styles.primary}
+              disabled={saving || typeof basePrice !== 'number'}
+              onClick={onSave}
+            >
               {saving ? 'Saving…' : 'Save Changes'}
             </button>
-            <button className={styles.danger} onClick={onDelete}>Delete Product</button>
+            <button className={styles.danger} onClick={onDelete}>
+              Delete Product
+            </button>
           </div>
         </div>
       </div>

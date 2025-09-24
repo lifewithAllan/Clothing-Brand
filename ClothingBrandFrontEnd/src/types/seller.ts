@@ -15,7 +15,8 @@ export type Jersey = {
   jerseyName: string;
   season: string;
   kitVersion: string;
-  leagueName: string; // from backend response mapping
+  /*leagueName: string; // from backend response mapping*/
+  leagueNames: string[];
   sizes: string[];
   descriptionPoints: string[];
   frontImageUrl: string;
@@ -30,7 +31,8 @@ export type CreateJerseyRequest = {
   jerseyName: string;
   season: string;
   kitVersion: string;
-  leagueId: number;
+  /*leagueId: number;*/
+  leagueIds: number[];
   sizes: string[];
   descriptionPoints: string[];
   frontImageUrl: string;
