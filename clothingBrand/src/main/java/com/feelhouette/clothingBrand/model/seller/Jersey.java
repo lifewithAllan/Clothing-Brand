@@ -21,9 +21,17 @@ public class Jersey {
     private String season; // e.g. 2025/26
     private String kitVersion; // player/fan/special
 
-    @ManyToOne
-    @JoinColumn(name = "league_id")
-    private League league;
+//    @ManyToOne
+//    @JoinColumn(name = "league_id")
+//    private League league;
+
+    @ManyToMany
+    @JoinTable(
+            name = "jersey_leagues",
+            joinColumns = @JoinColumn(name = "jersey_id"),
+            inverseJoinColumns = @JoinColumn(name = "league_id")
+    )
+    private List<League> leagues;
 
     @ElementCollection
     private List<String> sizes;

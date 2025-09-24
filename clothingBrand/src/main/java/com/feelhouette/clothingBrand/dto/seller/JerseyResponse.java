@@ -7,7 +7,7 @@ public record JerseyResponse(
         String jerseyName,
         String season,
         String kitVersion,
-        String leagueName,
+        List<String> leagueNames,
         List<String> sizes,
         List<String> descriptionPoints,
         String frontImageUrl,

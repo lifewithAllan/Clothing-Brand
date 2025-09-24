@@ -6,7 +6,7 @@ public record JerseyRequest(
         String jerseyName,
         String season,
         String kitVersion,
-        Long leagueId,
+        List<Long> leagueIds,
         List<String> sizes,
         List<String> descriptionPoints,
         String frontImageUrl,

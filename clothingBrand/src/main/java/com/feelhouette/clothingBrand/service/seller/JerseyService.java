@@ -20,15 +20,39 @@ public class JerseyService {
     private final JerseyRepository jerseyRepo;
     private final LeagueRepository leagueRepo;
 
+//    public JerseyResponse createJersey(JerseyRequest req) {
+//        League league = leagueRepo.findById(req.leagueId())
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "League not found"));
+//
+//        Jersey jersey = Jersey.builder()
+//                .jerseyName(req.jerseyName())
+//                .season(req.season())
+//                .kitVersion(req.kitVersion())
+//                .league(league)
+//                .sizes(req.sizes())
+//                .descriptionPoints(req.descriptionPoints())
+//                .frontImageUrl(req.frontImageUrl())
+//                .sideImageUrl(req.sideImageUrl())
+//                .backImageUrl(req.backImageUrl())
+//                .basePrice(req.basePrice())
+//                .discountedPrice(req.discountedPrice())
+//                .build();
+//
+//        Jersey saved = jerseyRepo.save(jersey);
+//        return mapToResponse(saved);
+//    }
+
     public JerseyResponse createJersey(JerseyRequest req) {
-        League league = leagueRepo.findById(req.leagueId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "League not found"));
+        List<League> leagues = leagueRepo.findAllById(req.leagueIds());
+        if (leagues.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No valid leagues found");
+        }
 
         Jersey jersey = Jersey.builder()
                 .jerseyName(req.jerseyName())
                 .season(req.season())
                 .kitVersion(req.kitVersion())
-                .league(league)
+                .leagues(leagues)
                 .sizes(req.sizes())
                 .descriptionPoints(req.descriptionPoints())
                 .frontImageUrl(req.frontImageUrl())
@@ -61,13 +85,32 @@ public class JerseyService {
         jerseyRepo.deleteById(id);
     }
 
+//    private JerseyResponse mapToResponse(Jersey jersey) {
+//        return new JerseyResponse(
+//                jersey.getId(),
+//                jersey.getJerseyName(),
+//                jersey.getSeason(),
+//                jersey.getKitVersion(),
+//                jersey.getLeague().getLeagueName(),
+//                jersey.getSizes(),
+//                jersey.getDescriptionPoints(),
+//                jersey.getFrontImageUrl(),
+//                jersey.getSideImageUrl(),
+//                jersey.getBackImageUrl(),
+//                jersey.getBasePrice(),
+//                jersey.getDiscountedPrice()
+//        );
+//    }
+
     private JerseyResponse mapToResponse(Jersey jersey) {
         return new JerseyResponse(
                 jersey.getId(),
                 jersey.getJerseyName(),
                 jersey.getSeason(),
                 jersey.getKitVersion(),
-                jersey.getLeague().getLeagueName(),
+                jersey.getLeagues().stream()
+                        .map(League::getLeagueName)
+                        .toList(),
                 jersey.getSizes(),
                 jersey.getDescriptionPoints(),
                 jersey.getFrontImageUrl(),
