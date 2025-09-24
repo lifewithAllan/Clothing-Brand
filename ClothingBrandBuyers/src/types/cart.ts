@@ -5,11 +5,12 @@ export type CartItemRequest = {
   customName?: string | null;
   customNumber?: string | null;
   quantity?: number;
+  leagueName: string;
   // badges selected (persisted) — array of badge names
   badges?: string[];
 };
 
-export type CartItem = {
+/*export type CartItem = {
   id: string; // UUID string
   jerseyId: number;
   jerseyName: string;
@@ -21,5 +22,27 @@ export type CartItem = {
   unitPrice: number;
   itemTotal: number;
   frontImageUrl?: string;
+  leagueName?: string;
   badges?: string[];
-};
+};*/
+
+export interface CartItem {
+  id: number;
+  jerseyId: number;
+  jerseyName: string;
+  frontImageUrl: string;
+  sideImageUrl: string;
+  backImageUrl: string;
+
+  // selected options
+  size: string;
+  versionSelected: string;
+  leagueName: string;        // ✅ newly added
+  badges: string[];          // ✅ newly added
+  customName?: string | null;
+  customNumber?: string | null;
+
+  // quantity and totals
+  quantity: number;
+  itemTotal: number;
+}

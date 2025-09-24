@@ -3,7 +3,7 @@ export type Product = {
   jerseyName: string;
   season: string;
   kitVersion: string;
-  leagueName?: string | null;
+  leagueNames: string[];
   sizes: string[];
   descriptionPoints: string[];
   frontImageUrl: string;

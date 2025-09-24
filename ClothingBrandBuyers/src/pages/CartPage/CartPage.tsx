@@ -3,7 +3,6 @@ import BuyerNavbar from '../../components/nav/BuyerNavbar';
 import HamburgerMenu from '../../components/nav/HamburgerMenu';
 import styles from './CartPage.module.css';
 import { useCart } from '../../app/contexts/CartContext';
-import { BADGE_PRICE } from '../../constants/config';
 import { useNavigate } from 'react-router-dom';
 
 const CartPage: React.FC = () => {
@@ -35,13 +34,44 @@ const CartPage: React.FC = () => {
                       <div className={styles.title}>{it.jerseyName}</div>
                       <div>Size: {it.size}</div>
                       <div>Version: {it.versionSelected}</div>
-                      <div>Badges: {(it.badgesSelected ?? []).join(', ') || 'None'}</div>
-                      <div>Custom: {it.customName || '-'} #{it.customNumber || '-'}</div>
+
+                      {/* ✅ Show league */}
+                      <div>League: {it.leagueName || 'None selected'}</div>
+
+                      {/* ✅ Show badges */}
+                      <div>
+                        Badges:{' '}
+                        {(it.badges && it.badges.length > 0)
+                          ? it.badges.join(', ')
+                          : 'None'}
+                      </div>
+
+                      <div>
+                        Custom: {it.customName || '-'} #{it.customNumber || '-'}
+                      </div>
                       <div>Qty: {it.quantity}</div>
                       <div>Line total: KSh {it.itemTotal.toFixed(2)}</div>
                       <div className={styles.actions}>
-                        <button onClick={() => update(it.id, { ...it, quantity: Math.max(1, (it.quantity ?? 1) - 1) })}>−</button>
-                        <button onClick={() => update(it.id, { ...it, quantity: (it.quantity ?? 1) + 1 })}>+</button>
+                        <button
+                          onClick={() =>
+                            update(it.id, {
+                              ...it,
+                              quantity: Math.max(1, (it.quantity ?? 1) - 1),
+                            })
+                          }
+                        >
+                          −
+                        </button>
+                        <button
+                          onClick={() =>
+                            update(it.id, {
+                              ...it,
+                              quantity: (it.quantity ?? 1) + 1,
+                            })
+                          }
+                        >
+                          +
+                        </button>
                         <button onClick={() => remove(it.id)}>Remove</button>
                       </div>
                     </div>
@@ -53,8 +83,15 @@ const CartPage: React.FC = () => {
                 <div className={styles.box}>
                   <div>Subtotal: KSh {subtotal.toFixed(2)}</div>
                   <div className={styles.actions}>
-                    <button className={styles.primary} onClick={() => navigate('/checkout')}>Checkout</button>
-                    <button className={styles.secondary} onClick={() => clear()}>Clear cart</button>
+                    <button
+                      className={styles.primary}
+                      onClick={() => navigate('/checkout')}
+                    >
+                      Checkout
+                    </button>
+                    <button className={styles.secondary} onClick={() => clear()}>
+                      Clear cart
+                    </button>
                   </div>
                 </div>
               </aside>

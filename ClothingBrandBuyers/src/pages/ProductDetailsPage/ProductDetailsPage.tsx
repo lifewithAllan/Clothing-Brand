@@ -11,6 +11,14 @@ import { useCart } from '../../app/contexts/CartContext';
 
 const ALL_SIZES = ['S','M','L','XL','XXL','3XL'];
 
+// For now simulate league → badges mapping.
+// In a real app, badges would be fetched from backend by league.
+const LEAGUE_BADGES: Record<string, string[]> = {
+  'Premier League': ['ChampionsPatch', 'NoRoomForRacism', 'RespectBadge'],
+  'La Liga': ['ChampionsPatch', 'FairPlay', 'SponsorPatch'],
+  'Serie A': ['Scudetto', 'TIMSponsor', 'CopaItaliaBadge'],
+};
+
 const ProductDetailsPage: React.FC = () => {
   const { id } = useParams();
   const pid = Number(id);
@@ -32,9 +40,9 @@ const ProductDetailsPage: React.FC = () => {
     setLoading(true);
     getProduct(pid).then(p => {
       setProduct(p);
-      // default size
       setSize(p.sizes?.[0] ?? null);
-      setSelectedLeague(p.leagueName ?? null);
+      // default league is first in array
+      setSelectedLeague(p.leagueNames?.[0] ?? null);
     }).finally(() => setLoading(false));
   }, [pid]);
 
@@ -43,7 +51,7 @@ const ProductDetailsPage: React.FC = () => {
   };
 
   const customPrintCost = useMemo(() => {
-    return (customName.trim() || customNumber.trim()) ? 300 : 0; // keep consistent with server (if you keep it there)
+    return (customName.trim() || customNumber.trim()) ? 300 : 0;
   }, [customName, customNumber]);
 
   const badgesCost = useMemo(() => {
@@ -59,7 +67,7 @@ const ProductDetailsPage: React.FC = () => {
   const { items } = useCart();
 
   const onAddToCart = async () => {
-    if (!product || !size) return alert('Please select a size.');
+    if (!product || !size || !selectedLeague) return alert('Please select size and league.');
     try {
       await add({
         jerseyId: product.id,
@@ -68,6 +76,7 @@ const ProductDetailsPage: React.FC = () => {
         customName: customName || null,
         customNumber: customNumber || null,
         quantity,
+        leagueName: selectedLeague!,
         badges: selectedBadges,
       });
       alert('Added to cart');
@@ -80,6 +89,8 @@ const ProductDetailsPage: React.FC = () => {
   if (loading) return <div>Loading…</div>;
   if (!product) return <div>Product not found</div>;
 
+  const availableBadges = selectedLeague ? (LEAGUE_BADGES[selectedLeague] ?? []) : [];
+
   return (
     <>
       <BuyerNavbar />
@@ -91,7 +102,12 @@ const ProductDetailsPage: React.FC = () => {
           </div>
           <div className={styles.right}>
             <h2>{product.jerseyName}</h2>
-            <div className={styles.meta}>{product.season} • {product.kitVersion} • {product.leagueName}</div>
+            <div className={styles.meta}>
+              {product.season} • {product.kitVersion}
+              {product.leagueNames?.length > 0 && (
+                <> • {product.leagueNames.join(', ')}</>
+              )}
+            </div>
             <ul>
               {product.descriptionPoints.map((d,i)=> <li key={i}>{d}</li>)}
             </ul>
@@ -111,6 +127,17 @@ const ProductDetailsPage: React.FC = () => {
                   <option>Special</option>
                 </select>
               </label>
+
+              <label>League
+                <select value={selectedLeague ?? ''} onChange={e => {
+                  setSelectedLeague(e.target.value);
+                  setSelectedBadges([]); // reset badges when league changes
+                }}>
+                  {product.leagueNames?.map(l => (
+                    <option key={l} value={l}>{l}</option>
+                  ))}
+                </select>
+              </label>
             </div>
 
             <div className={styles.section}>
@@ -123,16 +150,21 @@ const ProductDetailsPage: React.FC = () => {
               </label>
 
               <div className={styles.badges}>
-                <h5>League: {product.leagueName}</h5>
+                <h5>Badges for {selectedLeague ?? 'No league selected'}</h5>
                 <div className={styles.badgeList}>
-                  {/* Backend provides badges in league get; but product response doesn't include badges list in this simplified API.
-                      In a real app you would fetch league badges separately. For demo, simulate a few badges if none exist. */}
-                  {product.leagueName ? (
-                    // placeholder badges: in real app fetch /api/buyer/leagues/:id/badges
-                    ['ChampionsPatch', 'SponsorPatch', 'AnniversaryBadge'].map(b => (
-                      <label key={b} className={styles.badgeChip}><input type="checkbox" checked={selectedBadges.includes(b)} onChange={() => toggleBadge(b)} /> {b}</label>
+                  {availableBadges.length > 0 ? (
+                    availableBadges.map(b => (
+                      <label key={b} className={styles.badgeChip}>
+                        <input
+                          type="checkbox"
+                          checked={selectedBadges.includes(b)}
+                          onChange={() => toggleBadge(b)}
+                        /> {b}
+                      </label>
                     ))
-                  ) : <div>No league badges</div>}
+                  ) : (
+                    <div>No badges available</div>
+                  )}
                 </div>
               </div>
             </div>
@@ -150,5 +182,4 @@ const ProductDetailsPage: React.FC = () => {
     </>
   );
 };
-
 export default ProductDetailsPage;
