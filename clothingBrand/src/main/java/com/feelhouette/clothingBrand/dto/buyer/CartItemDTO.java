@@ -1,5 +1,7 @@
 package com.feelhouette.clothingBrand.dto.buyer;
 
+import java.util.List;
+
 public record CartItemDTO(
         String cartItemId, // UUID as string, optional on creation
         Long jerseyId,
@@ -7,6 +9,8 @@ public record CartItemDTO(
         String versionSelected,
         String customName,
         String customNumber,
-        Integer quantity
+        Integer quantity,
+        String leagueName,
+        List<String> badges
 ) {}
 
