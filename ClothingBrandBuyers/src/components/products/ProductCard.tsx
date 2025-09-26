@@ -17,7 +17,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
       </div>
       <div className={styles.info}>
         <div className={styles.title}>{product.jerseyName}</div>
-        <div className={styles.meta}>{product.season} • {product.kitVersion}</div>
+        <div className={styles.meta}>{product.season} • {product.kitVersion}-V</div>
         <div className={styles.priceRow}>
           {discounted ? (
             <>

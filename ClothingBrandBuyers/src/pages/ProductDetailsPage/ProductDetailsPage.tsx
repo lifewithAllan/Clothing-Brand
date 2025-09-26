@@ -103,10 +103,7 @@ const ProductDetailsPage: React.FC = () => {
           <div className={styles.right}>
             <h2>{product.jerseyName}</h2>
             <div className={styles.meta}>
-              {product.season} • {product.kitVersion}
-              {product.leagueNames?.length > 0 && (
-                <> • {product.leagueNames.join(', ')}</>
-              )}
+              {product.season} • {product.kitVersion} Version
             </div>
             <ul>
               {product.descriptionPoints.map((d,i)=> <li key={i}>{d}</li>)}
@@ -128,6 +125,12 @@ const ProductDetailsPage: React.FC = () => {
                 </select>
               </label>
 
+              
+            </div>
+
+            <div className={styles.section}>
+              <h4>Customize</h4>
+
               <label>League
                 <select value={selectedLeague ?? ''} onChange={e => {
                   setSelectedLeague(e.target.value);
@@ -138,13 +141,11 @@ const ProductDetailsPage: React.FC = () => {
                   ))}
                 </select>
               </label>
-            </div>
 
-            <div className={styles.section}>
-              <h4>Customize</h4>
               <label>Name to print
                 <input value={customName} onChange={e => setCustomName(e.target.value)} placeholder="Player name" />
               </label>
+
               <label>Number
                 <input value={customNumber} onChange={e => setCustomNumber(e.target.value)} placeholder="10" />
               </label>

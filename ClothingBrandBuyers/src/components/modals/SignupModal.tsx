@@ -31,7 +31,7 @@ const SignupModal: React.FC = () => {
 
   return (
     <ModalBase open={signupOpen} onClose={onClose} ariaLabel="Signup form">
-      <img src="/feelhouette logo.jpg" alt="logo" />
+      <img src="/feelhouette logo.jpg" alt="logo" className={styles.logo} />
       <h2>feelhouette</h2>
       <h2>Create account</h2>
       {sent ? (

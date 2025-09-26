@@ -1,19 +1,84 @@
 .form { 
-    display:flex; 
-    gap:8px; 
+  display: flex; 
+  gap: 8px; 
+  width: 100%;
+  max-width: 600px; /* keep it neat on desktops */
+  margin: 0 auto;   /* center it if inside a wide layout */
 }
 
 .input { 
-    flex:1; 
-    padding:10px 12px; 
-    border:1px solid #fd4c2a; 
-    border-radius:8px; 
+  flex: 1; 
+  padding: 10px 12px; 
+  border: 1px solid #fd4c2a; 
+  border-radius: 8px; 
+  font-size: 1rem;
 }
 
-.btn { border:none; 
-    background:#fd4c2a; 
-    color:#fff; 
-    padding:8px 12px; 
-    border-radius:8px; 
-    cursor:pointer; 
+.btn { 
+  border: none; 
+  background: #fd4c2a; 
+  color: #fff; 
+  padding: 10px 16px; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s ease;
+  white-space: nowrap; /* prevent text wrap */
+}
+
+.btn:hover {
+  background: #e04324;
+}
+
+/* -------- RESPONSIVE BREAKPOINTS -------- */
+
+/* Smartphones (≤480px) */
+@media (max-width: 480px) {
+  .form {
+    gap: 6px;
+  }
+
+  .input {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 4px 4px; /* ⬅️ reduced left/right padding */
+    flex: 0 0 20%;   /* keep button ~30% width */
+  }
+}
+
+/* Tablets (481px–768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .input {
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
+
+  .btn {
+    padding: 10px 14px;
+    font-size: 1rem;
+    flex: 0 0 25%; /* button ~25% */
+  }
+}
+
+/* Desktops (≥769px) */
+@media (min-width: 769px) {
+  .form {
+    max-width: 700px;
+  }
+
+  .input {
+    font-size: 1rem;
+    padding: 12px 14px;
+  }
+
+  .btn {
+    padding: 12px 18px;
+    font-size: 1rem;
+    flex: 0 0 auto; /* button auto-sized */
+  }
 }
