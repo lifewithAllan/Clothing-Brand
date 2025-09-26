@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as cartApi from '../../api/cartApi';
 import type { CartItem } from '../../types/cart';
+import { useAuth } from './AuthContext';
 
 // minimal cart context for UI and quick updates
 type CartContextType = {
@@ -16,6 +17,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [items, setItems] = useState<CartItem[] | null>(null);
+  const { isAuthenticated } = useAuth();
 
   const refresh = async () => {
     const data = await cartApi.listCart();
@@ -23,9 +25,14 @@ export const CartProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   };
 
   useEffect(() => {
-    // load cart on mount
-    refresh().catch(() => setItems([]));
-  }, []);
+    if (isAuthenticated) {
+      // load cart when logged in
+      refresh().catch(() => setItems([]));
+    } else {
+      // clear cart when logged out
+      setItems([]);
+    }
+  }, [isAuthenticated]);
 
   const add = async (payload: any) => {
     const data = await cartApi.addToCart(payload);
@@ -49,7 +56,11 @@ export const CartProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     await refresh();
   };
 
-  return <CartContext.Provider value={{ items, refresh, add, update, remove, clear }}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider value={{ items, refresh, add, update, remove, clear }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export const useCart = () => {
