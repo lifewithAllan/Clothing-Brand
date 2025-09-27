@@ -20,6 +20,7 @@ services:
     environment:
       POSTGRES_USER: postgres-Clothing-Brand
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: clothing-brand-db   # ✅ auto-create DB
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
