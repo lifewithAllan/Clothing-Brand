@@ -31,4 +31,4 @@ jwt:
 app:
   email:
     from: "no-reply@example.com"
-    logo-url: "https://example.com/assets/logo.png" # placeholder
+    logo-url: "http://localhost:8080/feelhouette-logo.jpg"
