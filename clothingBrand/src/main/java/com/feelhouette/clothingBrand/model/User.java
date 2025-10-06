@@ -48,24 +48,6 @@ public class User implements UserDetails {
         this.updatedAt = Instant.now();
     }
 
-//    // Getters & setters
-//    public UUID getId() { return id; }
-//    public String getEmail() { return email; }
-//    public void setEmail(String email) { this.email = email; }
-//    public String getPasswordHash() { return passwordHash; }
-//    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
-//    public String getFirstName() { return firstName; }
-//    public void setFirstName(String firstName) { this.firstName = firstName; }
-//    public String getLastName() { return lastName; }
-//    public void setLastName(String lastName) { this.lastName = lastName; }
-//    public boolean isEnabled() { return enabled; }
-//    public void setEnabled(boolean enabled) { this.enabled = enabled; }
-//    public Set<Role> getRoles() { return roles; }
-//    public void setRoles(Set<Role> roles) { this.roles = roles; }
-//    public Instant getCreatedAt() { return createdAt; }
-//    public Instant getUpdatedAt() { return updatedAt; }
-//    public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }
-
     // UserDetails implementation
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

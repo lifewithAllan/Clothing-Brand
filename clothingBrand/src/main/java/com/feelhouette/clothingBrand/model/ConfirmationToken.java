@@ -33,17 +33,3 @@ public class ConfirmationToken {
     }
 
 }
-
-//@Entity
-//@Table(name = "confirmation_tokens")
-//public class ConfirmationToken extends AbstractConfirmationToken {
-//    // No need to duplicate fields. They are inherited.
-//    // Buyer-specific fields could be added here if ever needed.
-//
-//    public ConfirmationToken(String token, String email, Instant expiresAt) {
-//        this.setToken(token);
-//        this.setEmail(email);
-//        this.setExpiresAt(expiresAt);
-//    }
-//}
-

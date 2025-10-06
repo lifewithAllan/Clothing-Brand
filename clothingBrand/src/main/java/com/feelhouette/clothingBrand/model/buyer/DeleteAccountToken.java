@@ -35,12 +35,5 @@ public class DeleteAccountToken {
         this.expiresAt = expiresAt;
     }
 
-//    // getters & setters
-//    public UUID getId() { return id; }
-//    public String getToken() { return token; }
-//    public Buyer getBuyer() { return buyer; }
-//    public Instant getExpiresAt() { return expiresAt; }
-//    public boolean isUsed() { return used; }
-//    public void setUsed(boolean used) { this.used = used; }
 }
 

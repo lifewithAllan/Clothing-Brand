@@ -35,16 +35,3 @@ public class BuyerConfirmationToken {
     }
 
 }
-
-//// 3. BUYER-SPECIFIC TOKEN ENTITY
-//@Data
-//@Entity
-//@Table(name = "buyer_confirmation_tokens")
-//public class BuyerConfirmationToken extends AbstractConfirmationToken {
-//
-//    public BuyerConfirmationToken(String token, String email, Instant expiresAt) {
-//        this.setToken(token);
-//        this.setEmail(email);
-//        this.setExpiresAt(expiresAt);
-//    }
-//}

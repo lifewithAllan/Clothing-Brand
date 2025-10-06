@@ -34,15 +34,5 @@ public class RefreshToken {
         this.user = user;
         this.expiresAt = expiresAt;
     }
-
-//    // getters and setters
-//    public UUID getId() { return id; }
-//    public String getToken() { return token; }
-//    public User getUser() { return user; }
-//    public Instant getExpiresAt() { return expiresAt; }
-//    public boolean isRevoked() { return revoked; }
-//    public void setRevoked(boolean revoked) { this.revoked = revoked; }
-//    public Instant getLastUsedAt() { return lastUsedAt; }
-//    public void setLastUsedAt(Instant lastUsedAt) { this.lastUsedAt = lastUsedAt; }
 }
 
