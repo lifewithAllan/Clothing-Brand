@@ -102,7 +102,8 @@ public class BuyerAuthService {
         var user = buyerRepository.fetchByEmail(request.email()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        String accessToken = jwtService.generateAccessToken(user.getEmail(), user.getRoles());
+        String accessToken = jwtService.generateAccessToken(user.getFirstName(), user.getRoles());
+        System.out.println("HERE IS THE JWT LOGIN TOKEN: " + accessToken);
         var refreshToken = refreshTokenService.createRefreshToken(user);
 
         return new AuthResponse(accessToken, refreshToken.getToken(), "Bearer", java.time.Instant.now().plusMillis(15*60*1000).toEpochMilli());
@@ -119,7 +120,8 @@ public class BuyerAuthService {
         refreshTokenService.revoke(rt);
         var newRt = refreshTokenService.createRefreshToken(user);
 
-        String accessToken = jwtService.generateAccessToken(user.getEmail(), user.getRoles());
+        String accessToken = jwtService.generateAccessToken(user.getFirstName(), user.getRoles());
+        System.out.println("HERE IS THE JWT REFRESH TOKEN: " + accessToken);
         return new AuthResponse(accessToken, newRt.getToken(), "Bearer", Instant.now().plusMillis(15*60*1000).toEpochMilli());
     }
 
