@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
 LABEL authors="theal"
 
 ENTRYPOINT ["top", "-b"]
@@ -26,7 +26,7 @@ RUN mvn clean package -DskipTests
 # ================================
 # Stage 2: Run the application
 # ================================
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine
 
 # Set working directory inside the container
 WORKDIR /app
