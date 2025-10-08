@@ -14,7 +14,7 @@ import { auth } from './authBridge';
 
 type AuthContextType = {
   accessToken: string | null;
-  user?: { email: string } | null;
+  user?: { firstName: string } | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (payload: LoginRequest) => Promise<void>;

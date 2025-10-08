@@ -19,7 +19,7 @@ const HamburgerMenu: React.FC = () => {
 
     try {
       await axios.post(`${import.meta.env.VITE_API_BASE}/api/buyer/account/delete/request`, 
-        { email: user?.email },
+        { firstName: user?.firstName },
         {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`, // auth header
