@@ -24,5 +24,9 @@ public interface BuyerRepository extends JpaRepository<Buyer, UUID> {
 
     @Query("SELECT COUNT(b) > 0 FROM Buyer b WHERE b.email = :email")
     boolean checkExistenceByEmail(@Param("email") String email);
+
+    // Example implementation for JPA
+    @Query("SELECT b FROM Buyer b WHERE b.firstName = :firstName")
+    Optional<Buyer> fetchByFirstName(@Param("firstName") String firstName);
 }
 
