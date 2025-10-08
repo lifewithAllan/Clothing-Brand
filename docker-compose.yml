@@ -1,0 +1,130 @@
+version: "3.9"
+
+services:
+  ###################################################
+  # 🔒 Nginx Reverse Proxy + Auto SSL Certificates
+  ###################################################
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./data/certs:/etc/nginx/certs:rw
+      - ./data/vhost.d:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
+    environment:
+      ENABLE_IPV6: "true"
+    networks:
+      - clothing-brand-network
+
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    restart: always
+    depends_on:
+      - nginx-proxy
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/certs:/etc/nginx/certs:rw
+      - ./data/vhost.d:/etc/nginx/vhost.d
+      - ./data/html:/usr/share/nginx/html
+    environment:
+      DEFAULT_EMAIL: feelhouette@gmail.com
+    networks:
+      - clothing-brand-network
+
+  ###################################################
+  # 🖥 React Frontend
+  ###################################################
+  frontend:
+    build:
+      context: ./ClothingBrandBuyers
+    container_name: clothing-brand-frontend
+    restart: unless-stopped
+    expose:
+      - "80"
+    env_file:
+      - ./ClothingBrandBuyers/.env
+    environment:
+      VIRTUAL_HOST: yourdomain.com
+      LETSENCRYPT_HOST: yourdomain.com
+      LETSENCRYPT_EMAIL: feelhouette@gmail.com
+    depends_on:
+      - backend
+    networks:
+      - clothing-brand-network
+
+  ###################################################
+  # 🧩 Spring Boot Backend
+  ###################################################
+  backend:
+    build: ./clothingBrand
+    container_name: clothing-brand-app
+    expose:
+      - "8080"
+    env_file:
+      - ./clothingBrand/.env     # ✅ Load backend environment variables
+    environment:
+      VIRTUAL_HOST: yourdomain.com
+      VIRTUAL_PATH: /api
+      LETSENCRYPT_HOST: yourdomain.com
+      LETSENCRYPT_EMAIL: feelhouette@gmail.com
+    depends_on:
+      - postgres
+    networks:
+      - clothing-brand-network
+    restart: unless-stopped
+
+  ###################################################
+  # 🐘 PostgreSQL Database
+  ###################################################
+  postgres:
+    container_name: postgres_container
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres-Clothing-Brand
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: clothing-brand-db
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - clothing-brand-network
+    restart: unless-stopped
+
+  ###################################################
+  # 🧭 PgAdmin (optional, for DB management)
+  ###################################################
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - clothing-brand-network
+    restart: unless-stopped
+
+###################################################
+# 🕸 Networks & Volumes
+###################################################
+networks:
+  clothing-brand-network:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
