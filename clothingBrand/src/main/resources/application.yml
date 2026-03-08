@@ -41,7 +41,9 @@ logging:
     file: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"
   level:
     root: INFO
-    org.springframework.web: DEBUG
+    org.springframework.web: INFO
+    io.github.resilience4j: DEBUG
+    org.springframework.cloud.gateway: DEBUG
 
 management:
   otlp:

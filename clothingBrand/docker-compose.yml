@@ -80,6 +80,24 @@ services:
     depends_on:
       - loki
 
+  grafana:
+    image: grafana/grafana:10.2.4
+    container_name: easyshop-grafana
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+      - prometheus
+
 networks:
   clothing-brand-network:
     driver: bridge
