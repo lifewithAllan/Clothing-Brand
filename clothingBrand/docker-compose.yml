@@ -56,6 +56,18 @@ services:
       - clothing-brand-network
     restart: unless-stopped
 
+  prometheus:
+    image: prom/prometheus:v2.50.0
+    container_name: "easyshop-prometheus"
+    extra_hosts: [ 'host.docker.internal:host-gateway' ]
+    command:
+      - --enable-feature=exemplar-storage
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9095:9090"
+
 networks:
   clothing-brand-network:
     driver: bridge
