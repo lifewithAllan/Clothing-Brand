@@ -32,3 +32,13 @@ app:
   email:
     from: "no-reply@example.com"
     logo-url: "http://localhost:8080/feelhouette-logo.jpg"
+
+loki:
+  endpoint: http://easyshop-loki:3100
+
+logging:
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"
+  level:
+    root: INFO
+    org.springframework.web: DEBUG

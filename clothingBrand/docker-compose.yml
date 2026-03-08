@@ -45,6 +45,17 @@ services:
       - clothing-brand-network
     restart: unless-stopped
 
+  loki:
+    image: grafana/loki:2.9.4
+    container_name: "easyshop-loki"
+    extra_hosts: [ 'host.docker.internal:host-gateway' ]
+    command: [ "-config.file=/etc/loki/local-config.yaml" ]
+    ports:
+      - "3100:3100"
+    networks:
+      - clothing-brand-network
+    restart: unless-stopped
+
 networks:
   clothing-brand-network:
     driver: bridge
