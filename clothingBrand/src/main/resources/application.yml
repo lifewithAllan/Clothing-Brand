@@ -1,6 +1,6 @@
 spring:
   application:
-      name:clothingBrand
+      name: clothingBrand
   datasource:
     url: jdbc:postgresql://localhost:5432/clothingBrand
     username: postgres
@@ -54,7 +54,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: health,info,prometheus
 
   endpoint:
     health:
@@ -71,3 +71,8 @@ management:
         http.server.requests: true
     tags:
       application: ${spring.application.name}
+    enable:
+      jvm: true
+      process: true
+      system: true
+      http: true

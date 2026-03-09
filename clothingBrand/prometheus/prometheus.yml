@@ -1,17 +1,8 @@
 global:
-  scrape_interval: 2s
+  scrape_interval: 5s
 
 scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: [ 'host.docker.internal:9095' ]
-  - job_name: 'edge-service'
-    scrape_interval: 2s
+  - job_name: 'clothing-brand-app'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: [ 'host.docker.internal:8090' ]
-  - job_name: 'catalog-service'
-    scrape_interval: 2s
-    metrics_path: '/actuator/prometheus'
-    static_configs:
-      - targets: [ 'host.docker.internal:8080' ]
+      - targets: ['clothing-brand-app:8080']

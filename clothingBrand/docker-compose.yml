@@ -67,16 +67,20 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "9095:9090"
+    networks:
+      - clothing-brand-network
 
   tempo:
     image: grafana/tempo:2.3.1
-    container_name: "easyshop-tempo"
-    extra_hosts: [ 'host.docker.internal:host-gateway' ]
-    command: [ “-config.file=/etc/tempo.yaml” ]
+    container_name: easyshop-tempo
+    command: [ "-config.file=/etc/tempo.yaml" ]
     volumes:
-      - ./tempo/tempo-local.yaml:/etc/tempo.yaml:ro- ./tempo-data:/tmp/tempo
+      - ./tempo/tempo-local.yaml:/etc/tempo.yaml:ro
+      - ./tempo-data:/tmp/tempo
     ports:
-      - "9411:9411" # zipkin
+      - "9411:9411"
+    networks:
+      - clothing-brand-network
     depends_on:
       - loki
 
@@ -97,6 +101,8 @@ services:
     depends_on:
       - loki
       - prometheus
+    networks:
+      - clothing-brand-network
 
 networks:
   clothing-brand-network:
